@@ -1,0 +1,25 @@
+.mapWrapper {
+  position: relative;
+  width: 50%;
+  max-width: 600px;
+  margin: auto;
+  border: 2px solid teal;
+}
+
+.map {
+  position: relative;
+  width: 100%;
+  display: block;
+  border: 2px solid red;
+}
+
+.pin {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background-color: red;
+  border-radius: 50%;
+  border: 1px solid white;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+}
