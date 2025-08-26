@@ -4,10 +4,17 @@ type Props = {
   track: Track;
   onClick: () => void;
   mapBounds: { latMin: number; latMax: number; lonMin: number; lonMax: number };
+  onHover?: (track: Track) => void;
+  onHoverOut?: () => void;
 };
 
-export default function TrackPin({ track, onClick, mapBounds }: Props) {
-  const { lat, lon } = track.Circ_location_coords;
+export default function TrackPin({ track, onClick, mapBounds, onHover, onHoverOut }: Props) {
+  const { lat, lon } = track.location_coords;
+  const type = track.type;
+  let color = "border-lime-500";
+  if (type === "Automotive") {
+    color = "border-orange-500";
+  }
 
   if (!mapBounds) {
     console.error("mapBounds is undefined!");
@@ -20,14 +27,13 @@ export default function TrackPin({ track, onClick, mapBounds }: Props) {
     ((lon - mapBounds.lonMin) / (mapBounds.lonMax - mapBounds.lonMin)) * 100;
 
   return (
-    <button
+    <div
       onClick={onClick}
+      onMouseEnter={() => onHover && onHover(track)}   // เรียกเมื่อ hover
+      onMouseLeave={() => onHoverOut && onHoverOut()} // เรียกเมื่อ hover ออก
       style={{ top: `${topPercent}%`, left: `${leftPercent}%` }}
-      className="absolute w-5 h-5 flex justify-center items-center rounded-2xl cursor-pointer border-2 border-red-600 bg-white px-2 py-1"
+      className={`absolute w-4 h-4 border-4 flex justify-center items-center rounded-2xl cursor-pointer px-1 py-1 ${color} hover:scale-120`}
     >
-      <div className="relative">
-        <div className="absolute top-0 left-0 z-50">{track.Circ_name}</div>
-      </div>
-    </button>
+    </div>
   );
 }

@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Track } from '@/types/track'
 import MapContainer from '@/components/MapContainer'
-import TrackInfo from '@/components/TrackInfo'
+// import TrackInfo from '@/components/TrackInfo'
 import { useTracks } from "@/hooks/useTracks";
 
 type Props = {
@@ -16,8 +16,7 @@ export default function TrackMapClient({ tracks }: Props) {
     return(
         <div>
             <MapContainer tracks={tracks} onSelectTrack={setSelectedTrack}/>
-            {selectedTrack && <TrackInfo track={selectedTrack}/>}
-            {/* <h1>Hello this is tracks map</h1> */}
+            {/* {selectedTrack && <TrackInfo track={selectedTrack}/>} */}
         </div>
     )
 }

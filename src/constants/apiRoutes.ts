@@ -1,1 +1,0 @@
-export const TRACKS_API = 'https://allthailandcircuitapi.onrender.com';

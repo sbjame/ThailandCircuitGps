@@ -1,14 +1,14 @@
 export interface Track {
   _id: string;
-  Circ_name: string;
-  Circ_location_coords: {
+  name: string;
+  location_coords: {
     lat: number;
     lon: number;
   };
-  Circ_length_km: number;
-  Circ_location_url: string;
-  Circ_type: string;
-  Circ_weather_daily: {
+  length_km: number;
+  location_url: string;
+  type: string;
+  weather_daily: {
     minTemp_c: number;
     maxTemp_c: number;
     avgTemp_c: number;
@@ -18,6 +18,8 @@ export interface Track {
     maxWind_mps: number;
     chanceOfRain: number;
   };
+  thumbnail: string;
+  images: string[];
 }
 
 type Props = {
