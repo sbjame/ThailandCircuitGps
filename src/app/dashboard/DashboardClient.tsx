@@ -14,22 +14,6 @@ export default function DashboardClient() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState<User | null>(null);
 
-
-  // const fetchUser = async () => {
-  //   try {
-  //     const token = localStorage.getItem("token");
-  //     if (!token) return;
-
-  //     const res = await axiosInstance.get("/user/me", {
-  //       headers: { authorization: `${token}` },
-  //     });
-  //     setUser(res.data);
-  //     console.log("Role: ", res.data.role);
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  // };
-
   const fetchUser = async () => {
     try {
       const token = localStorage.getItem("token");

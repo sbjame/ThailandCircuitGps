@@ -15,7 +15,6 @@ export default function MapContainer({
   onSelectTrack: (track: Track) => void;
 }) {
   const mapRef = useRef<HTMLDivElement>(null);
-  const [isClient, setIsClient] = useState(false);
   const [windowWidth, setWindowWidth] = useState(1920);
   const [scale, setScale] = useState(1);
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -31,12 +30,7 @@ export default function MapContainer({
     lonMax: 105.7,
   };
 
-  // useEffect(() => {
-  //   setIsClient(true);
-  // }, []);
-
   useEffect(() => {
-    // if (!isClient) return;
     setWindowWidth(window.innerWidth);
     const handleResize = () => setWindowWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);
@@ -44,7 +38,6 @@ export default function MapContainer({
   }, []);
 
   useEffect(() => {
-    // if (!isClient) return;
 
     const handleWheel = (e: WheelEvent) => {
       e.preventDefault();
