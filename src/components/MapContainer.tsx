@@ -21,7 +21,12 @@ export default function MapContainer({
   const [selectedTrack, setSelectedTrack] = useState<Track | null>(null);
   const [hoveredTrack, setHoveredTrack] = useState<Track | null>(null);
 
-  const mapBounds = {
+  const mapBounds: {
+    latMin: number;
+    latMax: number;
+    lonMin: number;
+    lonMax: number;
+  } = {
     latMin: 5.5,
     latMax: 20.5,
     lonMin: 97.3,
@@ -60,16 +65,21 @@ export default function MapContainer({
     const mapEl = mapRef.current;
     if (!mapEl) return;
 
-    mapEl.addEventListener("wheel", handleWheel, { passive: false });
-    mapEl.addEventListener("mousedown", handleMouseDown);
-    window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("mouseup", handleMouseUp);
+    const wheelHandler = (e: WheelEvent) => handleWheel(e);
+    const mouseDownHandler = (e: MouseEvent) => handleMouseDown(e);
+    const mouseMoveHandler = (e: MouseEvent) => handleMouseMove(e);
+    const mouseUpHandler = () => handleMouseUp();
+
+    mapEl.addEventListener("wheel", wheelHandler, { passive: false });
+    mapEl.addEventListener("mousedown", mouseDownHandler);
+    window.addEventListener("mousemove", mouseMoveHandler);
+    window.addEventListener("mouseup", mouseUpHandler);
 
     return () => {
-      mapEl.removeEventListener("wheel", handleWheel);
-      mapEl.removeEventListener("mousedown", handleMouseDown);
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("mouseup", handleMouseUp);
+      mapEl.removeEventListener("wheel", wheelHandler);
+      mapEl.removeEventListener("mousedown", mouseDownHandler);
+      window.removeEventListener("mousemove", mouseMoveHandler);
+      window.removeEventListener("mouseup", mouseUpHandler);
     };
   }, [dragging, lastPos]);
 
