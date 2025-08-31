@@ -16,7 +16,7 @@ export default function MapContainer({
 }) {
   const mapRef = useRef<HTMLDivElement>(null);
   const [isClient, setIsClient] = useState(false);
-  const [windowWidth, setWindowWidth] = useState(0);
+  const [windowWidth, setWindowWidth] = useState(1920);
   const [scale, setScale] = useState(1);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [dragging, setDragging] = useState(false);
@@ -31,21 +31,20 @@ export default function MapContainer({
     lonMax: 105.7,
   };
 
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
+  // useEffect(() => {
+  //   setIsClient(true);
+  // }, []);
 
   useEffect(() => {
-    if (!isClient) return;
+    // if (!isClient) return;
     setWindowWidth(window.innerWidth);
-
     const handleResize = () => setWindowWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, [isClient]);
+  }, []);
 
   useEffect(() => {
-    if (!isClient) return;
+    // if (!isClient) return;
 
     const handleWheel = (e: WheelEvent) => {
       e.preventDefault();
@@ -89,9 +88,9 @@ export default function MapContainer({
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mouseup", handleMouseUp);
     };
-  }, [isClient, dragging, lastPos]);
+  }, [dragging, lastPos]);
 
-  if (!isClient) return null; // SSR จะไม่ render anything
+  // if (!isClient) return null; // SSR จะไม่ render anything
 
   // const handleWheel = (e: WheelEvent) => {
   //   e.preventDefault();
