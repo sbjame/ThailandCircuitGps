@@ -30,23 +30,12 @@ export default function MapContainer({
     lonMax: 105.7,
   };
 
-<<<<<<< HEAD
-  const handleWheel = (e: WheelEvent) => {
-    e.preventDefault();
-    const zoomSpeed = 0.002; //*Zoom speed
-    setScale((prev) => {
-      const next = prev - e.deltaY * zoomSpeed;
-      return Math.min(Math.max(next, 0.5), 4); //* min/max scale
-    });
-  };
-=======
   useEffect(() => {
     setWindowWidth(window.innerWidth);
     const handleResize = () => setWindowWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
->>>>>>> 25bd2363f59496d0453761595f456ac309d81d5d
 
   if (windowWidth === null) return null; // รอ client
 
