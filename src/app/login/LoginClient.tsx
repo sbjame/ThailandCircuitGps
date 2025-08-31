@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import styles from "@/styles/map.module.css";
 import { axiosInstance } from "@/lib/axiosInstance";
 import { AxiosError } from "axios";
+import { User } from "@/types/user"
 
 export default function LoginClient() {
   const router = useRouter();
@@ -24,7 +25,7 @@ export default function LoginClient() {
     try {
       const res = await axiosInstance.post<{
         token?: string;
-        user?: any;
+        user?: User;
         message?: string;
       }>("/user/login", {
         user_Name: username,

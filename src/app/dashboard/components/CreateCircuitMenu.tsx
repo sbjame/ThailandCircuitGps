@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { axiosInstance } from "@/lib/axiosInstance";
+import Image from "next/image";
 
 type CreateCircuitMenuProps = {
   role: string;
@@ -206,11 +207,13 @@ export default function CreateCircuitMenu({ role }: CreateCircuitMenuProps) {
               </label>
               <div className="flex gap-2">
                 {images.map((img, i) => (
-                  <img
+                  <Image
                     key={i}
-                    src={URL.createObjectURL(img)}
+                    src={URL.createObjectURL(img)} // URL ชั่วคราว
                     alt={`preview-${i}`}
-                    className="w-[18vw] h-[18vw] object-cover rounded"
+                    width={288} // 18vw ประมาณ 288px สมมติ viewport 16rem
+                    height={288}
+                    className="object-cover rounded"
                   />
                 ))}
               </div>
@@ -228,11 +231,16 @@ export default function CreateCircuitMenu({ role }: CreateCircuitMenuProps) {
                 />
               </label>
               {thumbnail && (
-                <img
+                <Image
                   src={URL.createObjectURL(thumbnail)}
                   alt="thumbnail"
                   className="w-[20vw] h-[20vw] object-cover rounded"
                 />
+                // <img
+                //   src={URL.createObjectURL(thumbnail)}
+                //   alt="thumbnail"
+                //   className="w-[20vw] h-[20vw] object-cover rounded"
+                // />
               )}
             </div>
           </div>

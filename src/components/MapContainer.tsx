@@ -4,6 +4,7 @@ import TrackPin from "./TrackPin";
 import styles from "@/styles/map.module.css";
 import { AnimatePresence, motion } from "framer-motion";
 import { SiGooglemaps } from "react-icons/si";
+import Image from "next/image";
 
 export default function MapContainer({
   tracks,
@@ -172,12 +173,18 @@ export default function MapContainer({
                 </div>
                 <div className="flex flex-col gap-4 mt-2 mb-2">
                   {selectedTrack.images.map((img: string, index: number) => (
-                    <img
+                    <Image
                       key={index}
                       src={img}
                       alt={`Image ${index + 1}`}
                       className="w-full h-auto object-cover rounded-lg"
                     />
+                    // <img
+                    //   key={index}
+                    //   src={img}
+                    //   alt={`Image ${index + 1}`}
+                    //   className="w-full h-auto object-cover rounded-lg"
+                    // />
                   ))}
                 </div>
 
@@ -248,12 +255,18 @@ export default function MapContainer({
                 </a>
                 <div className="flex flex-col gap-4 mt-2 mb-2">
                   {selectedTrack.images.map((img: string, index: number) => (
-                    <img
+                    <Image
                       key={index}
                       src={img}
                       alt={`Image ${index + 1}`}
                       className="w-full h-auto object-cover rounded-lg"
                     />
+                    // <img
+                    //   key={index}
+                    //   src={img}
+                    //   alt={`Image ${index + 1}`}
+                    //   className="w-full h-auto object-cover rounded-lg"
+                    // />
                   ))}
                 </div>
               </div>
@@ -295,13 +308,18 @@ export default function MapContainer({
               <h1>Car / Motocycle / Kart</h1>
             </div>
           </div>
-          <img
+          <Image
+            src="/images/thailand-map.svg" // URL ชั่วคราว
+            alt={`Thailand Map`}
+            className="relative h-auto w-full object-cover drop-shadow-2xl drop-shadow-amber-400"
+          />
+          {/* <img
             src="/images/thailand-map.svg"
             alt="Thailand Map"
             draggable={false}
             onMouseDown={(e) => e.preventDefault()}
             className="relative h-auto w-full object-cover drop-shadow-2xl drop-shadow-amber-400"
-          />
+          /> */}
 
           {tracks.map((track) => (
             <TrackPin
@@ -325,11 +343,16 @@ export default function MapContainer({
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <img
+            <Image
               src={hoveredTrack.thumbnail}
               alt={hoveredTrack.name}
               className="w-full h-full object-cover"
             />
+            {/* <img
+              src={hoveredTrack.thumbnail}
+              alt={hoveredTrack.name}
+              className="w-full h-full object-cover"
+            /> */}
           </motion.div>
         )}
       </AnimatePresence>

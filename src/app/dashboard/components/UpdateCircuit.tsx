@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { axiosInstance } from "@/lib/axiosInstance";
+import Image from "next/image";
 
 type CircuitProps = {
   _id: string;
@@ -326,11 +327,16 @@ export default function UpdateCircuit() {
                       <div className="flex flex-wrap gap-2">
                         {formData.images?.map((img, idx) => (
                           <div key={idx} className="relative">
-                            <img
-                              src={img}
+                            <Image
+                              src={img} // URL ชั่วคราว
                               alt={`image-${idx}`}
                               className="h-20 w-20 object-cover rounded border"
                             />
+                            {/* <img
+                              src={img}
+                              alt={`image-${idx}`}
+                              className="h-20 w-20 object-cover rounded border"
+                            /> */}
                             <button
                               type="button"
                               onClick={() => {
@@ -376,12 +382,18 @@ export default function UpdateCircuit() {
                       {newImages.length > 0 && (
                         <div className="flex flex-wrap gap-2 mt-2">
                           {newImages.map((file, idx) => (
-                            <img
+                            <Image
                               key={idx}
-                              src={URL.createObjectURL(file)}
+                              src={URL.createObjectURL(file)} // URL ชั่วคราว
                               alt={`new-${idx}`}
                               className="h-20 w-20 object-cover rounded border"
                             />
+                            // <img
+                            //   key={idx}
+                            //   src={URL.createObjectURL(file)}
+                            //   alt={`new-${idx}`}
+                            //   className="h-20 w-20 object-cover rounded border"
+                            // />
                           ))}
                         </div>
                       )}
@@ -392,11 +404,16 @@ export default function UpdateCircuit() {
                       <p className="font-semibold">Thumbnail</p>
                       {formData.thumbnail && !removeThumbnail ? (
                         <div className="relative inline-block">
-                          <img
+                          <Image
                             src={formData.thumbnail}
                             alt="thumbnail"
-                            className="h-24 object-cover rounded border"
+                            className="h-24 object-cover rounded"
                           />
+                          {/* <img
+                            src={formData.thumbnail}
+                            alt="thumbnail"
+                            className="h-24 object-cover rounded"
+                          /> */}
                           <button
                             type="button"
                             onClick={() => {
@@ -423,11 +440,16 @@ export default function UpdateCircuit() {
                           }}
                         />
                         {newThumbnail && (
-                          <img
+                          <Image
                             src={URL.createObjectURL(newThumbnail)}
                             alt="preview-thumbnail"
-                            className="h-24 object-cover rounded border mt-2"
+                            className="h-24 rounded object-cover mt-2"
                           />
+                          // <img
+                          //   src={URL.createObjectURL(newThumbnail)}
+                          //   alt="preview-thumbnail"
+                          //   className="h-24 object-cover rounded border mt-2"
+                          // />
                         )}
                       </div>
                     </div>
@@ -448,12 +470,18 @@ export default function UpdateCircuit() {
                   {selectedCircuit.images?.length > 0 ? (
                     <div className="grid grid-cols-2 gap-2">
                       {selectedCircuit.images.map((img) => (
-                        <img
+                        <Image
                           key={img}
                           src={img}
                           alt="circuit"
                           className="rounded"
                         />
+                        // <img
+                        //   key={img}
+                        //   src={img}
+                        //   alt="circuit"
+                        //   className="rounded"
+                        // />
                       ))}
                     </div>
                   ) : (
@@ -467,11 +495,16 @@ export default function UpdateCircuit() {
                 <div>
                   <h2 className="text-lg font-bold mb-2">Thumbnail</h2>
                   {selectedCircuit.thumbnail ? (
-                    <img
+                    <Image
                       src={selectedCircuit.thumbnail}
                       alt="thumbnail"
                       className="rounded w-full"
                     />
+                    // <img
+                    //   src={selectedCircuit.thumbnail}
+                    //   alt="thumbnail"
+                    //   className="rounded w-full"
+                    // />
                   ) : (
                     <p>No thumbnail</p>
                   )}
