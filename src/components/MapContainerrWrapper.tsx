@@ -11,13 +11,13 @@ export default function MapContainerWrapper({
   tracks: Track[];
   onSelectTrack: (track: Track) => void;
 }) {
-  const [isMounted, setIsMounted] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setIsMounted(true);
+    setMounted(true);
   }, []);
 
-  if (!isMounted) return null;
+  if (!mounted) return null;
 
   return <MapContainer tracks={tracks} onSelectTrack={onSelectTrack} />;
 }
