@@ -95,7 +95,7 @@ export default function MapContainer({
             animate={{ x: 0 }}
             exit={{ x: "-100%" }}
             transition={{ duration: 0.4, ease: "easeInOut" }}
-            className="hidden md:block absolute left-0 top-0 h-full w-[360px] bg-white z-50 drop-shadow-xl drop-shadow-black/40"
+            className="hidden md:block absolute left-0 top-0 h-full w-90 bg-white z-50 drop-shadow-xl drop-shadow-black/40"
           >
             <div
               className="absolute right-[-1.5rem] top-1/2 -translate-y-1/2 bg-amber-500 px-1 py-4 rounded-xl cursor-pointer group"
