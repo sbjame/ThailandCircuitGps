@@ -2,8 +2,7 @@
 import { useState } from "react";
 import { Track } from "@/types/track";
 import dynamic from "next/dynamic";
-// const MapContainer = dynamic(() => import('@/components/MapContainer'), {ssr: false})
-import MapContainerWrapper from "@/components/MapContainerrWrapper";
+const MapContainer = dynamic(() => import('@/components/MapContainer'), {ssr: false})
 // import MapContainer from '@/components/MapContainer'
 import { useTracks } from "@/hooks/useTracks";
 
@@ -16,8 +15,7 @@ export default function TrackMapClient({ tracks }: Props) {
 
   return (
     <div>
-      <MapContainerWrapper tracks={tracks} onSelectTrack={setSelectedTrack} />
-      {/* <MapContainer tracks={tracks} onSelectTrack={setSelectedTrack}/> */}
+      <MapContainer tracks={tracks} onSelectTrack={setSelectedTrack}/>
     </div>
   );
 }
