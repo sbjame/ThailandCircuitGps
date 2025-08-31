@@ -32,7 +32,7 @@ export default function MapContainer({
 
   const handleWheel = (e: WheelEvent) => {
     e.preventDefault();
-    const zoomSpeed = 0.0015; //*Zoom speed
+    const zoomSpeed = 0.002; //*Zoom speed
     setScale((prev) => {
       const next = prev - e.deltaY * zoomSpeed;
       return Math.min(Math.max(next, 0.5), 4); //* min/max scale
