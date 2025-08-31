@@ -1,3 +1,5 @@
+"use client";
+
 import { useRef, useState, useEffect } from "react";
 import { Track } from "@/types/track";
 import TrackPin from "./TrackPin";
