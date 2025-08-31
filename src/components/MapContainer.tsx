@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import { useRef, useState, useEffect } from "react";
 import { Track } from "@/types/track";
@@ -15,7 +15,7 @@ export default function MapContainer({
   onSelectTrack: (track: Track) => void;
 }) {
   const mapRef = useRef<HTMLDivElement>(null);
-  const [windowWidth, setWindowWidth] = useState<number | null>(null);
+
   const [scale, setScale] = useState(1);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [dragging, setDragging] = useState(false);
@@ -30,44 +30,35 @@ export default function MapContainer({
     lonMax: 105.7,
   };
 
+  const handleWheel = (e: WheelEvent) => {
+    e.preventDefault();
+    const zoomSpeed = 0.0015; //*Zoom speed
+    setScale((prev) => {
+      const next = prev - e.deltaY * zoomSpeed;
+      return Math.min(Math.max(next, 0.5), 4); //* min/max scale
+    });
+  };
+
+  const handleMouseDown = (e: MouseEvent) => {
+    if (e.button !== 0) return;
+    setDragging(true);
+    setLastPos({ x: e.clientX, y: e.clientY });
+  };
+
+  const handleMouseMove = (e: MouseEvent) => {
+    if (!dragging || !lastPos) return;
+    const dx = e.clientX - lastPos.x;
+    const dy = e.clientY - lastPos.y;
+    setPosition((prev) => ({ x: prev.x + dx, y: prev.y + dy }));
+    setLastPos({ x: e.clientX, y: e.clientY });
+  };
+
+  const handleMouseUp = () => {
+    setDragging(false);
+    setLastPos(null);
+  };
+
   useEffect(() => {
-    setWindowWidth(window.innerWidth);
-    const handleResize = () => setWindowWidth(window.innerWidth);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  if (windowWidth === null) return null; // รอ client
-
-  useEffect(() => {
-    const handleWheel = (e: WheelEvent) => {
-      e.preventDefault();
-      const zoomSpeed = 0.0015;
-      setScale((prev) => {
-        const next = prev - e.deltaY * zoomSpeed;
-        return Math.min(Math.max(next, 0.5), 4);
-      });
-    };
-
-    const handleMouseDown = (e: MouseEvent) => {
-      if (e.button !== 0) return;
-      setDragging(true);
-      setLastPos({ x: e.clientX, y: e.clientY });
-    };
-
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!dragging || !lastPos) return;
-      const dx = e.clientX - lastPos.x;
-      const dy = e.clientY - lastPos.y;
-      setPosition((prev) => ({ x: prev.x + dx, y: prev.y + dy }));
-      setLastPos({ x: e.clientX, y: e.clientY });
-    };
-
-    const handleMouseUp = () => {
-      setDragging(false);
-      setLastPos(null);
-    };
-
     const mapEl = mapRef.current;
     if (!mapEl) return;
 
@@ -266,7 +257,7 @@ export default function MapContainer({
       {/* --- Map --- */}
       <motion.div
         animate={{
-          x: selectedTrack && windowWidth >= 768 ? "18vw" : "0vw",
+          x: selectedTrack && window.innerWidth >= 768 ? "18vw" : "0vw",
         }}
         transition={{ duration: 0.4, ease: "easeInOut" }}
         className="flex-1 flex justify-center items-center overflow-hidden z-40"
