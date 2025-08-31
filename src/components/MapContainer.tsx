@@ -107,8 +107,6 @@ export default function MapContainer({
               </svg>
             </div>
             <div className="relative h-full p-4 py-8 flex flex-col overflow-y-auto scrollbar-hide">
-              {/* ปุ่มปิด */}
-
               {/* ข้อมูล Track */}
               <div className="flex flex-col text-2xl">
                 <h1 className="font-bold">{selectedTrack.name}</h1>
@@ -200,7 +198,6 @@ export default function MapContainer({
             transition={{ duration: 0.4, ease: "easeInOut" }}
             className="block md:hidden absolute bottom-0 left-0 z-50 px-4 py-6 bg-white w-full drop-shadow-t-xl rounded-t-2xl h-[90vh] drop-shadow-xl drop-shadow-black"
           >
-            {/* ปุ่มปิด */}
             <div
               className="absolute top-4 right-4 p-1 bg-amber-500 rounded-4xl cursor-pointer z-50"
               onClick={() => setSelectedTrack(null)}
@@ -274,11 +271,19 @@ export default function MapContainer({
             transition: dragging ? "none" : "transform 0.05s linear",
           }}
         >
-          <div className="absolute top-12 right-0 flex justify-center items-center gap-2">
-            <div className="w-4 h-4 bg-lime-500 rounded-4xl"></div>
-            <h1>Kart</h1>
-            <div className="w-4 h-4 bg-orange-500 rounded-4xl"></div>
-            <h1>Car / Motocycle</h1>
+          <div className="absolute top-10 right-16 text-sm flex flex-col items-start gap-2">
+            <div className="flex justify-start items-center gap-2">
+              <div className="w-4 h-4 bg-lime-500 rounded-4xl"></div>
+              <h1>Kart</h1>
+            </div>
+            <div className="flex justify-start items-center gap-2">
+              <div className="w-4 h-4 bg-orange-500 rounded-4xl"></div>
+              <h1>Car / Motocycle</h1>
+            </div>
+            <div className="flex justify-start items-center gap-2">
+              <div className="w-4 h-4 bg-blue-500 rounded-4xl"></div>
+              <h1>Car / Motocycle / Kart</h1>
+            </div>
           </div>
           <img
             src="/images/thailand-map.svg"

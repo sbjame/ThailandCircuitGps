@@ -9,7 +9,6 @@ export function useTracks(){
 
     return {
         tracks: data,
-        isLoading,
         isError: error,
     }
 }

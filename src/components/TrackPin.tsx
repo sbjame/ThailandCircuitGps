@@ -1,4 +1,5 @@
 import { Track } from "@/types/track";
+import { col } from "framer-motion/client";
 
 type Props = {
   track: Track;
@@ -15,6 +16,10 @@ export default function TrackPin({ track, onClick, mapBounds, onHover, onHoverOu
   if (type === "Automotive") {
     color = "border-orange-500";
   }
+  if(type === "Automotive & Kart"){
+    color = "border-blue-500";
+  }
+
 
   if (!mapBounds) {
     console.error("mapBounds is undefined!");
@@ -29,8 +34,8 @@ export default function TrackPin({ track, onClick, mapBounds, onHover, onHoverOu
   return (
     <div
       onClick={onClick}
-      onMouseEnter={() => onHover && onHover(track)}   // เรียกเมื่อ hover
-      onMouseLeave={() => onHoverOut && onHoverOut()} // เรียกเมื่อ hover ออก
+      onMouseEnter={() => onHover && onHover(track)}
+      onMouseLeave={() => onHoverOut && onHoverOut()}
       style={{ top: `${topPercent}%`, left: `${leftPercent}%` }}
       className={`absolute w-4 h-4 border-4 flex justify-center items-center rounded-2xl cursor-pointer px-1 py-1 ${color} hover:scale-120`}
     >
