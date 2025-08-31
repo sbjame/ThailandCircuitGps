@@ -1,8 +1,8 @@
 "use client";
 
+import ClientOnly from "./ClientOnly";
 import MapContainer from "./MapContainer";
 import { Track } from "@/types/track";
-import ClientOnly from "./ClientOnly";
 
 export default function MapContainerWrapper({
   tracks,
