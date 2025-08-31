@@ -2,7 +2,7 @@ import axios from 'axios';
 import { error } from 'console';
 
 export const axiosInstance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:5000/api',
+  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL || 'https://thailandcircuitgpsapi.onrender.com/api',
   timeout: 5000
 });
 
