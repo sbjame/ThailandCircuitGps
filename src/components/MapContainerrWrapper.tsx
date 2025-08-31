@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import MapContainer from "./MapContainer";
 import { Track } from "@/types/track";
+import ClientOnly from "./ClientOnly";
 
 export default function MapContainerWrapper({
   tracks,
@@ -19,5 +20,9 @@ export default function MapContainerWrapper({
 
   if (!mounted) return null;
 
-  return <MapContainer tracks={tracks} onSelectTrack={onSelectTrack} />;
+  return (
+    <ClientOnly>
+      <MapContainer tracks={tracks} onSelectTrack={onSelectTrack} />
+    </ClientOnly>
+  );
 }
