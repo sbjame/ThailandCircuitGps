@@ -1,0 +1,16 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import DashboardClient from "./DashboardClient";
+
+export default function DashboardClientWrapper() {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) return null; // รอจน client-side
+
+  return <DashboardClient />;
+}
