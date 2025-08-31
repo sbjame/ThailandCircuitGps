@@ -4,7 +4,6 @@ import TrackPin from "./TrackPin";
 import styles from "@/styles/map.module.css";
 import { AnimatePresence, motion } from "framer-motion";
 import { SiGooglemaps } from "react-icons/si";
-import Image from "next/image";
 
 export default function MapContainer({
   tracks,
@@ -22,12 +21,7 @@ export default function MapContainer({
   const [selectedTrack, setSelectedTrack] = useState<Track | null>(null);
   const [hoveredTrack, setHoveredTrack] = useState<Track | null>(null);
 
-  const mapBounds: {
-    latMin: number;
-    latMax: number;
-    lonMin: number;
-    lonMax: number;
-  } = {
+  const mapBounds = {
     latMin: 5.5,
     latMax: 20.5,
     lonMin: 97.3,
@@ -38,7 +32,7 @@ export default function MapContainer({
     e.preventDefault();
     const zoomSpeed = 0.0015; //*Zoom speed
     setScale((prev) => {
-      const next = prev - e.deltaY * zoomSpeed;
+      let next = prev - e.deltaY * zoomSpeed;
       return Math.min(Math.max(next, 0.5), 4); //* min/max scale
     });
   };
@@ -66,21 +60,16 @@ export default function MapContainer({
     const mapEl = mapRef.current;
     if (!mapEl) return;
 
-    const wheelHandler = (e: WheelEvent) => handleWheel(e);
-    const mouseDownHandler = (e: MouseEvent) => handleMouseDown(e);
-    const mouseMoveHandler = (e: MouseEvent) => handleMouseMove(e);
-    const mouseUpHandler = () => handleMouseUp();
-
-    mapEl.addEventListener("wheel", wheelHandler, { passive: false });
-    mapEl.addEventListener("mousedown", mouseDownHandler);
-    window.addEventListener("mousemove", mouseMoveHandler);
-    window.addEventListener("mouseup", mouseUpHandler);
+    mapEl.addEventListener("wheel", handleWheel, { passive: false });
+    mapEl.addEventListener("mousedown", handleMouseDown);
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mouseup", handleMouseUp);
 
     return () => {
-      mapEl.removeEventListener("wheel", wheelHandler);
-      mapEl.removeEventListener("mousedown", mouseDownHandler);
-      window.removeEventListener("mousemove", mouseMoveHandler);
-      window.removeEventListener("mouseup", mouseUpHandler);
+      mapEl.removeEventListener("wheel", handleWheel);
+      mapEl.removeEventListener("mousedown", handleMouseDown);
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseup", handleMouseUp);
     };
   }, [dragging, lastPos]);
 
@@ -173,19 +162,12 @@ export default function MapContainer({
                 </div>
                 <div className="flex flex-col gap-4 mt-2 mb-2">
                   {selectedTrack.images.map((img: string, index: number) => (
-                    <Image
+                    <img
                       key={index}
                       src={img}
                       alt={`Image ${index + 1}`}
                       className="w-full h-auto object-cover rounded-lg"
-                      unoptimized
                     />
-                    // <img
-                    //   key={index}
-                    //   src={img}
-                    //   alt={`Image ${index + 1}`}
-                    //   className="w-full h-auto object-cover rounded-lg"
-                    // />
                   ))}
                 </div>
 
@@ -256,19 +238,12 @@ export default function MapContainer({
                 </a>
                 <div className="flex flex-col gap-4 mt-2 mb-2">
                   {selectedTrack.images.map((img: string, index: number) => (
-                    <Image
+                    <img
                       key={index}
                       src={img}
                       alt={`Image ${index + 1}`}
                       className="w-full h-auto object-cover rounded-lg"
-                      unoptimized
                     />
-                    // <img
-                    //   key={index}
-                    //   src={img}
-                    //   alt={`Image ${index + 1}`}
-                    //   className="w-full h-auto object-cover rounded-lg"
-                    // />
                   ))}
                 </div>
               </div>
@@ -310,18 +285,13 @@ export default function MapContainer({
               <h1>Car / Motocycle / Kart</h1>
             </div>
           </div>
-          <Image
-            src="/images/thailand-map.svg" // URL ชั่วคราว
-            alt={`Thailand Map`}
-            className="relative h-auto w-full object-cover drop-shadow-2xl drop-shadow-amber-400"
-          />
-          {/* <img
+          <img
             src="/images/thailand-map.svg"
             alt="Thailand Map"
             draggable={false}
             onMouseDown={(e) => e.preventDefault()}
             className="relative h-auto w-full object-cover drop-shadow-2xl drop-shadow-amber-400"
-          /> */}
+          />
 
           {tracks.map((track) => (
             <TrackPin
@@ -345,17 +315,11 @@ export default function MapContainer({
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <Image
+            <img
               src={hoveredTrack.thumbnail}
               alt={hoveredTrack.name}
               className="w-full h-full object-cover"
-              unoptimized
             />
-            {/* <img
-              src={hoveredTrack.thumbnail}
-              alt={hoveredTrack.name}
-              className="w-full h-full object-cover"
-            /> */}
           </motion.div>
         )}
       </AnimatePresence>
