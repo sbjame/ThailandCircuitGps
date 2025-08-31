@@ -15,7 +15,7 @@ export default function MapContainer({
   onSelectTrack: (track: Track) => void;
 }) {
   const mapRef = useRef<HTMLDivElement>(null);
-  const [windowWidth, setWindowWidth] = useState(1920);
+  const [windowWidth, setWindowWidth] = useState<number | null>(null);
   const [scale, setScale] = useState(1);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [dragging, setDragging] = useState(false);
@@ -37,8 +37,9 @@ export default function MapContainer({
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  useEffect(() => {
+  if (windowWidth === null) return null; // รอ client
 
+  useEffect(() => {
     const handleWheel = (e: WheelEvent) => {
       e.preventDefault();
       const zoomSpeed = 0.0015;
@@ -94,7 +95,7 @@ export default function MapContainer({
             animate={{ x: 0 }}
             exit={{ x: "-100%" }}
             transition={{ duration: 0.4, ease: "easeInOut" }}
-            className="hidden md:block absolute left-0 top-0 h-full w-90 bg-white z-50 drop-shadow-xl drop-shadow-black/40"
+            className="hidden md:block absolute left-0 top-0 h-full w-[360px] bg-white z-50 drop-shadow-xl drop-shadow-black/40"
           >
             <div
               className="absolute right-[-1.5rem] top-1/2 -translate-y-1/2 bg-amber-500 px-1 py-4 rounded-xl cursor-pointer group"
