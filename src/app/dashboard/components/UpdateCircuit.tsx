@@ -36,11 +36,14 @@ export default function UpdateCircuit() {
   const [removeThumbnail, setRemoveThumbnail] = useState(false);
   const [newImages, setNewImages] = useState<File[]>([]);
   const [newThumbnail, setNewThumbnail] = useState<File | null>(null);
-  const [weatherUpdataStatus, setWeatherUpdateStatus] = useState({ status: "Manual Weather Update", color: "text-white"});
+  const [weatherUpdataStatus, setWeatherUpdateStatus] = useState({
+    status: "Manual Weather Update",
+    color: "text-white",
+  });
 
   const fetchCircuit = async () => {
     try {
-      const res = await axiosInstance.get("/circuit");
+      const res = await axiosInstance.get<CircuitProps[]>("/circuit"); // ระบุ type ของ data
       setCircuits(res.data);
     } catch (err) {
       console.error(err);
@@ -50,14 +53,23 @@ export default function UpdateCircuit() {
   const fetchManualWeatherUpdate = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axiosInstance.get("/weather/update", {
-        headers: { authorization: token },
+      const res = await axiosInstance.get<{ message: string }>(
+        "/weather/update",
+        {
+          headers: { authorization: token },
+        }
+      );
+
+      setWeatherUpdateStatus({
+        status: res.data.message,
+        color: "text-red-700",
       });
 
-      setWeatherUpdateStatus({status: res.data.message, color: "text-red-700"})
-
       setTimeout(() => {
-        setWeatherUpdateStatus({status: "Manual Weather Update", color: "text-white"});
+        setWeatherUpdateStatus({
+          status: "Manual Weather Update",
+          color: "text-white",
+        });
       }, 5000);
     } catch (err) {
       console.error(err);
@@ -78,7 +90,10 @@ export default function UpdateCircuit() {
     setNewThumbnail(null);
   };
 
-  const handleFormChange = (field: keyof CircuitProps, value: any) => {
+  const handleFormChange = <K extends keyof CircuitProps>(
+    field: K,
+    value: CircuitProps[K]
+  ) => {
     if (!formData) return;
     setFormData({ ...formData, [field]: value });
   };

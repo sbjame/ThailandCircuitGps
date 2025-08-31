@@ -129,35 +129,35 @@ export default function MapContainer({
                 <div className="text-base flex flex-col gap-2 bg-gray-200 py-2 px-4 rounded-b-xl">
                   <div className="flex justify-between">
                     <p>Min Temp (°C):</p>
-                    {selectedTrack.weather_daily.minTemp_c}
+                    {selectedTrack.weather_daily?.minTemp_c ?? "-"}
                   </div>
                   <div className="flex justify-between">
                     <p>Max Temp (°C):</p>
-                    {selectedTrack.weather_daily.maxTemp_c}
+                    {selectedTrack.weather_daily?.maxTemp_c ?? "-"}
                   </div>
                   <div className="flex justify-between">
                     <p>Avg Temp (°C):</p>
-                    {selectedTrack.weather_daily.avgTemp_c}
+                    {selectedTrack.weather_daily?.avgTemp_c ?? "-"}
                   </div>
                   <div className="flex justify-between">
                     <p>Min Temp (°F):</p>
-                    {selectedTrack.weather_daily.minTemp_f}
+                    {selectedTrack.weather_daily?.minTemp_f ?? "-"}
                   </div>
                   <div className="flex justify-between">
                     <p>Max Temp (°F):</p>
-                    {selectedTrack.weather_daily.maxTemp_f}
+                    {selectedTrack.weather_daily?.maxTemp_f ?? "-"}
                   </div>
                   <div className="flex justify-between">
                     <p>Avg Temp (°F):</p>
-                    {selectedTrack.weather_daily.avgTemp_f}
+                    {selectedTrack.weather_daily?.avgTemp_f ?? "-"}
                   </div>
                   <div className="flex justify-between">
                     <p>Max Wind Speed (m/s)</p>
-                    {selectedTrack.weather_daily.maxWind_mps}
+                    {selectedTrack.weather_daily?.maxWind_mps ?? "-"}
                   </div>
                   <div className="flex justify-between">
                     <p>Chance of rain (%)</p>
-                    {selectedTrack.weather_daily.chanceOfRain}
+                    {selectedTrack.weather_daily?.chanceOfRain ?? "-"}
                   </div>
                 </div>
                 <div className="flex flex-col gap-4 mt-2 mb-2">

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import styles from "@/styles/map.module.css";
 import { axiosInstance } from "@/lib/axiosInstance";
+import { AxiosError } from "axios";
 
 export default function LoginClient() {
   const router = useRouter();
@@ -14,14 +15,18 @@ export default function LoginClient() {
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [createStatus, setCreateStatus] = useState("hidden")
+  const [createStatus, setCreateStatus] = useState("hidden");
 
   const [top, setTop] = useState("top-[-1000px]");
 
   const handleLogin = async () => {
     setError("");
     try {
-      const res = await axiosInstance.post("/user/login", {
+      const res = await axiosInstance.post<{
+        token?: string;
+        user?: any;
+        message?: string;
+      }>("/user/login", {
         user_Name: username,
         password: password,
       });
@@ -33,9 +38,9 @@ export default function LoginClient() {
       } else {
         setError(res.data.message || "Login failed");
       }
-    } catch (err: any) {
-      // console.error(err);
-      setError(err.response?.data?.error || "Network error");
+    } catch (err) {
+      const error = err as AxiosError<{ error?: string }>;
+      setError(error.response?.data?.error || "Network error");
     }
   };
 
@@ -50,11 +55,10 @@ export default function LoginClient() {
         password: password,
       });
       setError("Create Successed");
-      setCreateStatus("block")
-    } catch (err: any) {
-      console.log(err);
-      console.log(err.response.data.message);
-      setError(err.response.data.message || "Network error");
+      setCreateStatus("block");
+    } catch (err) {
+      const error = err as AxiosError<{ message?: string }>;
+      setError(error.response?.data?.message || "Network error");
     }
   };
 
@@ -65,7 +69,7 @@ export default function LoginClient() {
 
   const handleToLogin = () => {
     setError("");
-    setCreateStatus("hidden")
+    setCreateStatus("hidden");
     setTop("top-[-1000px]");
   };
 
@@ -167,7 +171,9 @@ export default function LoginClient() {
           </div>
         </div>
       </div>
-      <div className={`${createStatus} absolute z-30 bg-black/20 w-screen h-screen flex justify-center items-center`}>
+      <div
+        className={`${createStatus} absolute z-30 bg-black/20 w-screen h-screen flex justify-center items-center`}
+      >
         <div className="flex flex-col justify-self-center items-center gap-4 p-10 bg-white rounded text-xl">
           <h1>Create Successed</h1>
           <div
