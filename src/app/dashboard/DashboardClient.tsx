@@ -44,13 +44,11 @@ export default function DashboardClient() {
 
   return (
     <div>
-      <div>
-        <UserinfoClient user={user} onUserChange={setUser} />
-      </div>
+      <UserinfoClient user={user} onUserChange={setUser} />
       {(user.role === "manager" || user.role === "admin") && (
         <div>
           <CreateCircuitMenu role={user.role} />
-          <UpdateCircuit/>
+          <UpdateCircuit />
         </div>
       )}
 
