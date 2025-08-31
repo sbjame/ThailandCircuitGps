@@ -90,21 +90,20 @@ export default function UpdateCircuit() {
     try {
       const form = new FormData();
 
-      // ข้อมูลทั่วไป
       form.append("name", formData.name);
       form.append("length_km", formData.length_km);
       form.append("type", formData.type);
       form.append("location_url", formData.location_url);
 
-      // ส่งรูปที่ถูกลบ
+      //! ส่งรูปที่ถูกลบ
       if (removedImages.length > 0) {
         form.append("removeImages", JSON.stringify(removedImages));
       }
 
-      // ส่งไฟล์ใหม่
+      //! ส่งไฟล์ใหม่
       newImages.forEach((file) => form.append("images", file));
 
-      // thumbnail
+      // !thumbnail
       if (removeThumbnail) form.append("removeThumbnail", "true");
       if (newThumbnail) form.append("thumbnail", newThumbnail);
 
@@ -112,7 +111,7 @@ export default function UpdateCircuit() {
         headers: { authorization: token },
       });
 
-      // update frontend state
+      //! update frontend state
       setCircuits((prev) =>
         prev.map((c) =>
           c._id === formData._id
@@ -134,7 +133,6 @@ export default function UpdateCircuit() {
         )
       );
 
-      // reset
       setSelectedCircuit(null);
       setViewType(null);
       setRemovedImages([]);
