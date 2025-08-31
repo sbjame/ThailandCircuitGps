@@ -15,7 +15,8 @@ export default function MapContainer({
   onSelectTrack: (track: Track) => void;
 }) {
   const mapRef = useRef<HTMLDivElement>(null);
-
+  const [isClient, setIsClient] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(0);
   const [scale, setScale] = useState(1);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [dragging, setDragging] = useState(false);
@@ -30,35 +31,50 @@ export default function MapContainer({
     lonMax: 105.7,
   };
 
-  const handleWheel = (e: WheelEvent) => {
-    e.preventDefault();
-    const zoomSpeed = 0.0015; //*Zoom speed
-    setScale((prev) => {
-      const next = prev - e.deltaY * zoomSpeed;
-      return Math.min(Math.max(next, 0.5), 4); //* min/max scale
-    });
-  };
-
-  const handleMouseDown = (e: MouseEvent) => {
-    if (e.button !== 0) return;
-    setDragging(true);
-    setLastPos({ x: e.clientX, y: e.clientY });
-  };
-
-  const handleMouseMove = (e: MouseEvent) => {
-    if (!dragging || !lastPos) return;
-    const dx = e.clientX - lastPos.x;
-    const dy = e.clientY - lastPos.y;
-    setPosition((prev) => ({ x: prev.x + dx, y: prev.y + dy }));
-    setLastPos({ x: e.clientX, y: e.clientY });
-  };
-
-  const handleMouseUp = () => {
-    setDragging(false);
-    setLastPos(null);
-  };
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   useEffect(() => {
+    if (!isClient) return;
+    setWindowWidth(window.innerWidth);
+
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [isClient]);
+
+  useEffect(() => {
+    if (!isClient) return;
+
+    const handleWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      const zoomSpeed = 0.0015;
+      setScale((prev) => {
+        const next = prev - e.deltaY * zoomSpeed;
+        return Math.min(Math.max(next, 0.5), 4);
+      });
+    };
+
+    const handleMouseDown = (e: MouseEvent) => {
+      if (e.button !== 0) return;
+      setDragging(true);
+      setLastPos({ x: e.clientX, y: e.clientY });
+    };
+
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!dragging || !lastPos) return;
+      const dx = e.clientX - lastPos.x;
+      const dy = e.clientY - lastPos.y;
+      setPosition((prev) => ({ x: prev.x + dx, y: prev.y + dy }));
+      setLastPos({ x: e.clientX, y: e.clientY });
+    };
+
+    const handleMouseUp = () => {
+      setDragging(false);
+      setLastPos(null);
+    };
+
     const mapEl = mapRef.current;
     if (!mapEl) return;
 
@@ -73,7 +89,54 @@ export default function MapContainer({
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mouseup", handleMouseUp);
     };
-  }, [dragging, lastPos]);
+  }, [isClient, dragging, lastPos]);
+
+  if (!isClient) return null; // SSR จะไม่ render anything
+
+  // const handleWheel = (e: WheelEvent) => {
+  //   e.preventDefault();
+  //   const zoomSpeed = 0.0015; //*Zoom speed
+  //   setScale((prev) => {
+  //     const next = prev - e.deltaY * zoomSpeed;
+  //     return Math.min(Math.max(next, 0.5), 4); //* min/max scale
+  //   });
+  // };
+
+  // const handleMouseDown = (e: MouseEvent) => {
+  //   if (e.button !== 0) return;
+  //   setDragging(true);
+  //   setLastPos({ x: e.clientX, y: e.clientY });
+  // };
+
+  // const handleMouseMove = (e: MouseEvent) => {
+  //   if (!dragging || !lastPos) return;
+  //   const dx = e.clientX - lastPos.x;
+  //   const dy = e.clientY - lastPos.y;
+  //   setPosition((prev) => ({ x: prev.x + dx, y: prev.y + dy }));
+  //   setLastPos({ x: e.clientX, y: e.clientY });
+  // };
+
+  // const handleMouseUp = () => {
+  //   setDragging(false);
+  //   setLastPos(null);
+  // };
+
+  // useEffect(() => {
+  //   const mapEl = mapRef.current;
+  //   if (!mapEl) return;
+
+  //   mapEl.addEventListener("wheel", handleWheel, { passive: false });
+  //   mapEl.addEventListener("mousedown", handleMouseDown);
+  //   window.addEventListener("mousemove", handleMouseMove);
+  //   window.addEventListener("mouseup", handleMouseUp);
+
+  //   return () => {
+  //     mapEl.removeEventListener("wheel", handleWheel);
+  //     mapEl.removeEventListener("mousedown", handleMouseDown);
+  //     window.removeEventListener("mousemove", handleMouseMove);
+  //     window.removeEventListener("mouseup", handleMouseUp);
+  //   };
+  // }, [dragging, lastPos]);
 
   return (
     <div className="relative flex h-screen w-screen overflow-hidden">
@@ -257,7 +320,7 @@ export default function MapContainer({
       {/* --- Map --- */}
       <motion.div
         animate={{
-          x: selectedTrack && window.innerWidth >= 768 ? "18vw" : "0vw",
+          x: selectedTrack && windowWidth >= 768 ? "18vw" : "0vw",
         }}
         transition={{ duration: 0.4, ease: "easeInOut" }}
         className="flex-1 flex justify-center items-center overflow-hidden z-40"

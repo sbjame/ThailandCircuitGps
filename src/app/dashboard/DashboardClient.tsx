@@ -12,7 +12,12 @@ import UpdateCircuit from "./components/UpdateCircuit";
 export default function DashboardClient() {
   const router = useRouter();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isClient, setIsClient] = useState(false);
   const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    setIsClient(true); // ตรวจสอบว่า client side
+  }, []);
 
   const fetchUser = async () => {
     try {
@@ -30,6 +35,7 @@ export default function DashboardClient() {
   };
 
   useEffect(() => {
+    if (!isClient) return; // SSR ไม่ทำอะไร
     const token = localStorage.getItem("token");
     if (token) {
       setIsLoggedIn(true);
@@ -38,19 +44,45 @@ export default function DashboardClient() {
       setIsLoggedIn(false);
       router.push("/login");
     }
-  }, []);
+  }, [isClient]);
 
-  if (!isLoggedIn || !user) return null;
+  if (!isClient || !isLoggedIn || !user) return null; // SSR return null
+
+  // const fetchUser = async () => {
+  //   try {
+  //     const token = localStorage.getItem("token");
+  //     if (!token) return;
+
+  //     const res = await axiosInstance.get("/user/me", {
+  //       headers: { authorization: `${token}` },
+  //     });
+  //     setUser(res.data);
+  //     console.log("Role: ", res.data.role);
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
+  //   if (token) {
+  //     setIsLoggedIn(true);
+  //     fetchUser();
+  //   } else {
+  //     setIsLoggedIn(false);
+  //     router.push("/login");
+  //   }
+  // }, []);
+
+  // if (!isLoggedIn || !user) return null;
 
   return (
     <div>
-      <div>
-        <UserinfoClient user={user} onUserChange={setUser} />
-      </div>
+      <UserinfoClient user={user} onUserChange={setUser} />
       {(user.role === "manager" || user.role === "admin") && (
         <div>
           <CreateCircuitMenu role={user.role} />
-          <UpdateCircuit/>
+          <UpdateCircuit />
         </div>
       )}
 
