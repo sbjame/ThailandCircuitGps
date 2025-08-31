@@ -1,3 +1,5 @@
+"use client";
+
 import { Track } from "@/types/track";
 
 export default function TrackInfoCard({ track }: { track: Track }) {

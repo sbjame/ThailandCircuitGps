@@ -1,3 +1,5 @@
+"use client";
+
 import { Track } from "@/types/track";
 import { col } from "framer-motion/client";
 import { useState } from "react";
