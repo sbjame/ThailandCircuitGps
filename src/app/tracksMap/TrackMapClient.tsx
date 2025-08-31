@@ -1,7 +1,9 @@
 'use client';
 import { useState } from "react";
 import { Track } from '@/types/track'
-import MapContainer from '@/components/MapContainer'
+import dynamic from "next/dynamic";
+const MapContainer = dynamic(() => import('@/components/MapContainer'), {ssr: false})
+// import MapContainer from '@/components/MapContainer'
 import { useTracks } from "@/hooks/useTracks";
 
 type Props = {
