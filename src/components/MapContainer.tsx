@@ -32,7 +32,7 @@ export default function MapContainer({
     e.preventDefault();
     const zoomSpeed = 0.0015; //*Zoom speed
     setScale((prev) => {
-      let next = prev - e.deltaY * zoomSpeed;
+      const next = prev - e.deltaY * zoomSpeed;
       return Math.min(Math.max(next, 0.5), 4); //* min/max scale
     });
   };

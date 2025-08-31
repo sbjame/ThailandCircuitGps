@@ -22,6 +22,6 @@ export interface Track {
   images: string[];
 }
 
-type Props = {
-  tracks: Track[];
-}
+// type Props = {
+//   tracks: Track[];
+// }

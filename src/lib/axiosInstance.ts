@@ -1,9 +1,9 @@
-import axios from 'axios';
-import { error } from 'console';
+import axios from "axios";
 
 export const axiosInstance = axios.create({
-  baseURL: process.env.BASE_URL || 'https://thailandcircuitgpsapi.onrender.com/api',
-  timeout: 5000
+  baseURL:
+    process.env.BASE_URL || "https://thailandcircuitgpsapi.onrender.com/api",
+  timeout: 15000,
 });
 
 axiosInstance.interceptors.response.use(

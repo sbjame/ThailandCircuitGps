@@ -1,5 +1,6 @@
 import { Track } from "@/types/track";
 import { col } from "framer-motion/client";
+import { useState } from "react";
 
 type Props = {
   track: Track;
@@ -12,12 +13,12 @@ type Props = {
 export default function TrackPin({ track, onClick, mapBounds, onHover, onHoverOut }: Props) {
   const { lat, lon } = track.location_coords;
   const type = track.type;
-  let color = "border-lime-500";
+  const [color, setColor] = useState("border-lime-500")
   if (type === "Automotive") {
-    color = "border-orange-500";
+    setColor("border-orange-500")
   }
   if(type === "Automotive & Kart"){
-    color = "border-blue-500";
+    setColor("border-blue-500")
   }
 
 
