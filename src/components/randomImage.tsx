@@ -14,7 +14,7 @@ const RandomImage = () => {
 
   return (
     <div className="h-[90vh] w-[100%] flex justify-center items-center">
-      {image && <Image src={image} alt="Circuit img" className="h-[60vh] sm:h-[90vh] w-auto"/>}
+      {image && <Image src={image} alt="Circuit img" className="h-[60vh] sm:h-[90vh] w-auto" unoptimized/>}
   {/* <img src={image} alt="circuit img" className="h-[60vh] sm:h-[90vh] w-auto" /> */}
     </div>
   );

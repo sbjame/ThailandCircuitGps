@@ -178,6 +178,7 @@ export default function MapContainer({
                       src={img}
                       alt={`Image ${index + 1}`}
                       className="w-full h-auto object-cover rounded-lg"
+                      unoptimized
                     />
                     // <img
                     //   key={index}
@@ -260,6 +261,7 @@ export default function MapContainer({
                       src={img}
                       alt={`Image ${index + 1}`}
                       className="w-full h-auto object-cover rounded-lg"
+                      unoptimized
                     />
                     // <img
                     //   key={index}
@@ -347,6 +349,7 @@ export default function MapContainer({
               src={hoveredTrack.thumbnail}
               alt={hoveredTrack.name}
               className="w-full h-full object-cover"
+              unoptimized
             />
             {/* <img
               src={hoveredTrack.thumbnail}

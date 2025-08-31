@@ -331,6 +331,7 @@ export default function UpdateCircuit() {
                               src={img} // URL ชั่วคราว
                               alt={`image-${idx}`}
                               className="h-20 w-20 object-cover rounded border"
+                              unoptimized
                             />
                             {/* <img
                               src={img}
@@ -387,6 +388,7 @@ export default function UpdateCircuit() {
                               src={URL.createObjectURL(file)} // URL ชั่วคราว
                               alt={`new-${idx}`}
                               className="h-20 w-20 object-cover rounded border"
+                              unoptimized
                             />
                             // <img
                             //   key={idx}
@@ -408,6 +410,7 @@ export default function UpdateCircuit() {
                             src={formData.thumbnail}
                             alt="thumbnail"
                             className="h-24 object-cover rounded"
+                            unoptimized
                           />
                           {/* <img
                             src={formData.thumbnail}
@@ -444,6 +447,7 @@ export default function UpdateCircuit() {
                             src={URL.createObjectURL(newThumbnail)}
                             alt="preview-thumbnail"
                             className="h-24 rounded object-cover mt-2"
+                            unoptimized
                           />
                           // <img
                           //   src={URL.createObjectURL(newThumbnail)}
@@ -475,6 +479,7 @@ export default function UpdateCircuit() {
                           src={img}
                           alt="circuit"
                           className="rounded"
+                          unoptimized
                         />
                         // <img
                         //   key={img}
@@ -499,6 +504,7 @@ export default function UpdateCircuit() {
                       src={selectedCircuit.thumbnail}
                       alt="thumbnail"
                       className="rounded w-full"
+                      unoptimized
                     />
                     // <img
                     //   src={selectedCircuit.thumbnail}

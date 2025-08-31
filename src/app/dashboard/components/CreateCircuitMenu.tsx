@@ -235,6 +235,7 @@ export default function CreateCircuitMenu({ role }: CreateCircuitMenuProps) {
                   src={URL.createObjectURL(thumbnail)}
                   alt="thumbnail"
                   className="w-[20vw] h-[20vw] object-cover rounded"
+                  unoptimized
                 />
                 // <img
                 //   src={URL.createObjectURL(thumbnail)}
