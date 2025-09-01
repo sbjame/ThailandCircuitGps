@@ -37,7 +37,7 @@ export default function DashboardClient() {
       setIsLoggedIn(false);
       router.push("/login");
     }
-  }, []);
+  }, [router]);
 
   if (!isLoggedIn || !user) return null;
 
