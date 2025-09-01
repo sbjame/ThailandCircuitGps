@@ -43,9 +43,7 @@ export default function UpdateCircuit() {
   });
   const [loading, setLoading] = useState(false);
   const [deleteConfirm, setDeleteConfirm] = useState(false);
-  const [circuitToDelete, setCircuitToDelete] = useState<CircuitProps | null>(
-    null
-  );
+  const [circuitToDelete, setCircuitToDelete] = useState<CircuitProps | null>(null);
 
   const fetchCircuit = async () => {
     try {
@@ -169,7 +167,7 @@ export default function UpdateCircuit() {
     }
   };
 
-  const handelDeleteConfirm = async (circuit: any) => {
+  const handelDeleteConfirm = async (circuit: CircuitProps) => {
     setCircuitToDelete(circuit);
     setDeleteConfirm(true);
   };
@@ -179,7 +177,7 @@ export default function UpdateCircuit() {
     setCircuitToDelete(null)
   }
 
-  const handleDeleteCircuitSure = async(circuit: any) => {
+  const handleDeleteCircuitSure = async(circuit: CircuitProps) => {
     if(!circuit) return;
     try{
       const token = localStorage.getItem("token")
@@ -207,7 +205,7 @@ export default function UpdateCircuit() {
             <p className="font-bold">{circuitToDelete?.name}</p>
             <p>ID: {circuitToDelete?._id}</p>
             <div className="flex gap-8">
-              <button onClick={(() => handleDeleteCircuitSure(circuitToDelete))} className="px-8 py-2 bg-red-600 text-white cursor-pointer hover:rounded-2xl duration-300">Yes</button>
+              <button onClick={() => {if (circuitToDelete) handleDeleteCircuitSure(circuitToDelete)}} className="px-8 py-2 bg-red-600 text-white cursor-pointer hover:rounded-2xl duration-300">Yes</button>
               <button onClick={handleDeleteCircuitCancel} className="px-8 py-2 bg-lime-500 text-white cursor-pointer hover:rounded-2xl duration-300">No</button>
             </div>
           </div>

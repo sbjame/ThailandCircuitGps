@@ -7,6 +7,7 @@ import styles from "@/styles/map.module.css";
 import { SiGooglemaps } from "react-icons/si";
 import { Transition } from "@headlessui/react";
 
+
 export default function MapContainer({
   tracks,
   onSelectTrack,
@@ -283,7 +284,7 @@ export default function MapContainer({
             className="relative h-auto w-full object-cover drop-shadow-2xl drop-shadow-amber-400"
           />
 
-          {tracks.map((track: any) => (
+          {tracks.map((track: Track) => (
             <TrackPin
               key={track._id}
               track={track}
