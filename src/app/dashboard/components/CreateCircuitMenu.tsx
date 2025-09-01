@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { axiosInstance } from "@/lib/axiosInstance";
-import styles from "@/styles/map.module.css"
+import styles from "@/styles/map.module.css";
 
 type CreateCircuitMenuProps = {
   role: string;
@@ -23,7 +23,7 @@ export default function CreateCircuitMenu({ role }: CreateCircuitMenuProps) {
   const [loading, setLoading] = useState(false);
 
   const handleCreateCircuit = async () => {
-    setLoading(true)
+    setLoading(true);
 
     if (!circuitName.trim()) {
       alert("Please enter the name of the racetrack.");
@@ -103,7 +103,7 @@ export default function CreateCircuitMenu({ role }: CreateCircuitMenuProps) {
       setLocationUrl("");
       setImages([]);
       setThumbnail(null);
-      setLoading(false)
+      setLoading(false);
     } catch (err) {
       console.error("❌ Error creating circuit:", err);
     }
@@ -123,7 +123,7 @@ export default function CreateCircuitMenu({ role }: CreateCircuitMenuProps) {
   };
 
   return (
-    <div className={`relative flex flex-col items-center px-8 gap-4`}>
+    <div className={`relative flex flex-col items-center m-2 md:m-8 gap-4`}>
       {loading && (
         <div
           className={`absolute top-0 left-1/2 -translate-x-1/2 h-full w-[96vw] bg-black/40 z-40 flex justify-center items-center`}
@@ -206,14 +206,14 @@ export default function CreateCircuitMenu({ role }: CreateCircuitMenuProps) {
           </div>
           <div className="flex flex-col gap-2">
             <div className="flex-auto flex flex-col justify-center items-center gap-2">
-              <label className="bg-white p-2 w-full rounded flex justify-center items-center">
-                Upload Images (max 5)
+              <label className="bg-white p-2 w-full rounded flex flex-col md:flex-row justify-center items-center gap-2">
+                <p>Upload Images (max 5)</p>
                 <input
                   type="file"
                   multiple
                   accept="image/*"
                   onChange={handleImageChange}
-                  className="bg-gray-300 rounded ml-2 text-sm px-2"
+                  className="bg-gray-300 rounded ml-0 md:ml-2 text-sm px-2 w-full"
                 />
               </label>
               <div className="flex gap-2">
@@ -230,13 +230,13 @@ export default function CreateCircuitMenu({ role }: CreateCircuitMenuProps) {
 
             {/* Upload thumbnail */}
             <div className="flex-auto flex flex-col justify-center items-center gap-2">
-              <label className="bg-white p-2 w-full rounded flex justify-center items-center">
-                Upload Thumbnail (1 file only)
+              <label className="bg-white p-2 w-full rounded flex flex-col md:flex-row justify-center items-center gap-2">
+                <p>Upload Thumbnail (1 file only)</p>
                 <input
                   type="file"
                   accept="image/*"
                   onChange={handleThumbnailChange}
-                  className="bg-gray-300 rounded ml-2 text-sm px-2"
+                  className="bg-gray-300 rounded ml-0 md:ml-2 text-sm px-2 w-full"
                 />
               </label>
               {thumbnail && (

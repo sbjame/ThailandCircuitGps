@@ -108,8 +108,8 @@ export default function UserinfoClient({ user, onUserChange }: Props) {
   };
 
   return (
-    <div className="flex flex-col gap-4 py-8">
-      <div className="flex flex-col items-center px-8 pt-4 gap-4">
+    <div className="flex flex-col gap-4 py-8 mt-12 md:mt-0">
+      <div className="flex flex-col items-center px-2 md:px-8 pt-4 gap-4">
         <h1 className="text-2xl text-amber-500 font-bold">Dashboard</h1>
         <div className="w-full">
           <div className="flex justify-between text-2xl bg-gray-300 p-2 rounded-t">
@@ -142,7 +142,7 @@ export default function UserinfoClient({ user, onUserChange }: Props) {
                   <p>Role:</p>
                   <p className="capitalize">{user.role}</p>
                 </div>
-                <div className="flex gap-2">
+                <div className="flex flex-col md:flex-row gap-2">
                   <div className="flex flex-col flex-auto gap-2">
                     <div className="flex flex-col gap-2">
                       <label

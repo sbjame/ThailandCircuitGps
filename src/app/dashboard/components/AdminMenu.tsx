@@ -49,8 +49,8 @@ export default function AdminMenu() {
   };
 
   return (
-    <div className="m-8">
-      <div className="flex justify-between w-full bg-gray-300 rounded-t">
+    <div className="m-2 md:m-8">
+      <div className="flex flex-col md:flex-row justify-between w-full bg-gray-300 rounded-t">
         <h1 className="text-2xl p-2">Admin Menu</h1>
         <button
           onClick={fetchUsers}
@@ -59,11 +59,11 @@ export default function AdminMenu() {
           Reload
         </button>
       </div>
-      <div className="bg-gray-200 px-2 py-4 max-h-[92vh] overflow-y-auto">
+      <div className="p-2 bg-gray-200 overflow-y-auto max-h-[92vh] rounded-b">
         {users.length === 0 ? (
           <p>No users found</p>
         ) : (
-          <table className="table-fixed w-full text-center">
+          <table className="w-full">
             <thead className="bg-amber-500">
               <tr className="">
                 <th>ID</th>
@@ -74,16 +74,16 @@ export default function AdminMenu() {
                 <th></th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="bg-gray-200 text-center">
               {users.map((user) => (
                 <tr key={user._id} className="border-b border-gray-400">
                   <td className="p-4">{user._id}</td>
-                  <td>{user.user_Name}</td>
-                  <td>
+                  <td className="px-4">{user.user_Name}</td>
+                  <td className="px-4">
                     {user.first_Name} {user.last_Name}
                   </td>
-                  <td>{user.email}</td>
-                  <td>{user.role}</td>
+                  <td className="px-4">{user.email}</td>
+                  <td className="px-4">{user.role}</td>
                   <td className="flex flex-col gap-1 p-1 justify-center items-center">
                     <label className="flex gap-2 text-sm justify-center items-center">
                       Select Role

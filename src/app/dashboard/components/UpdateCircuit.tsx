@@ -197,7 +197,7 @@ export default function UpdateCircuit() {
   }
 
   return (
-    <div className="relative mx-8 my-8">
+    <div className="relative m-2 md:m-8">
       {deleteConfirm && (
         <div className="absolute top-0 left-0 h-full w-full bg-black/40 flex justify-center items-center rounded">
           <div className="bg-white p-4 flex flex-col gap-4 rounded text-2xl justify-center items-center relative">
@@ -211,7 +211,7 @@ export default function UpdateCircuit() {
           </div>
         </div>
       )}
-      <div className="flex justify-between w-full bg-gray-300 rounded-t">
+      <div className="flex flex-col md:flex-row justify-between w-full bg-gray-300 rounded-t">
         <h1 className="text-2xl p-2 rounded-t">Circuit List</h1>
         <div className="relative">
           <button
