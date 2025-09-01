@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { axiosInstance } from "@/lib/axiosInstance";
 import { User } from "@/types/user";
-import { div } from "framer-motion/client";
 
 type Props = {
   user: User;

@@ -23,7 +23,6 @@ export default function DashboardClient() {
         headers: { authorization: `${token}` },
       });
       setUser(res.data);
-      console.log("Role: ", res.data.role);
     } catch (err) {
       console.error(err);
     }

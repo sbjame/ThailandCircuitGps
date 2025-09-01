@@ -1,7 +1,6 @@
 "use client";
 
 import { axiosInstance } from "@/lib/axiosInstance";
-import { col, li, tr } from "framer-motion/client";
 import { useEffect, useState } from "react";
 
 type User = {
@@ -44,7 +43,6 @@ export default function AdminMenu() {
           headers: { authorization: token },
         }
       );
-      console.log("res: ", res.data);
     } catch (err) {
       console.error(err);
     }

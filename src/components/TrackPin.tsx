@@ -1,5 +1,4 @@
 import { Track } from "@/types/track";
-import { col } from "framer-motion/client";
 import { useEffect, useState } from "react";
 
 type Props = {

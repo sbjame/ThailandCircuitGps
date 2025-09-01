@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { axiosInstance } from "@/lib/axiosInstance";
+import styles from "@/styles/map.module.css";
 
 type CircuitProps = {
   _id: string;
@@ -40,6 +41,11 @@ export default function UpdateCircuit() {
     status: "Manual Weather Update",
     color: "text-white",
   });
+  const [loading, setLoading] = useState(false);
+  const [deleteConfirm, setDeleteConfirm] = useState(false);
+  const [circuitToDelete, setCircuitToDelete] = useState<CircuitProps | null>(
+    null
+  );
 
   const fetchCircuit = async () => {
     try {
@@ -99,6 +105,7 @@ export default function UpdateCircuit() {
   };
 
   const handleSave = async () => {
+    setLoading(true);
     if (!formData) return;
     const token = localStorage.getItem("token");
 
@@ -155,15 +162,58 @@ export default function UpdateCircuit() {
       setNewImages([]);
       setNewThumbnail(null);
       fetchCircuit();
+      setLoading(false);
     } catch (err) {
       console.error(err);
       alert("Update failed");
     }
   };
 
+  const handelDeleteConfirm = async (circuit: any) => {
+    setCircuitToDelete(circuit);
+    setDeleteConfirm(true);
+  };
+
+  const handleDeleteCircuitCancel = () => {
+    setDeleteConfirm(false)
+    setCircuitToDelete(null)
+  }
+
+  const handleDeleteCircuitSure = async(circuit: any) => {
+    if(!circuit) return;
+    try{
+      const token = localStorage.getItem("token")
+      const res = await axiosInstance.patch(`/circuit/delete/${circuit._id}`,
+        {},
+        {
+          headers: {authorization: token}
+        }
+      )
+      setCircuitToDelete(null)
+      setDeleteConfirm(false)
+      fetchCircuit()
+    } catch(err) {
+      console.error(err)
+      setDeleteConfirm(false)
+    }
+  }
+
   return (
-    <div className="mx-8 my-8">
-      <div className="flex justify-between w-full bg-gray-300">
+    <div className="relative mx-8 my-8">
+      {deleteConfirm && (
+        <div className="absolute top-0 left-0 h-full w-full bg-black/40 flex justify-center items-center rounded">
+          <div className="bg-white p-4 flex flex-col gap-4 rounded text-2xl justify-center items-center relative">
+            <p>Are you sure you want to delete this track?</p>
+            <p className="font-bold">{circuitToDelete?.name}</p>
+            <p>ID: {circuitToDelete?._id}</p>
+            <div className="flex gap-8">
+              <button onClick={(() => handleDeleteCircuitSure(circuitToDelete))} className="px-8 py-2 bg-red-600 text-white cursor-pointer hover:rounded-2xl duration-300">Yes</button>
+              <button onClick={handleDeleteCircuitCancel} className="px-8 py-2 bg-lime-500 text-white cursor-pointer hover:rounded-2xl duration-300">No</button>
+            </div>
+          </div>
+        </div>
+      )}
+      <div className="flex justify-between w-full bg-gray-300 rounded-t">
         <h1 className="text-2xl p-2 rounded-t">Circuit List</h1>
         <div className="relative">
           <button
@@ -180,7 +230,7 @@ export default function UpdateCircuit() {
           </button>
         </div>
       </div>
-      <div className="p-2 bg-gray-200 overflow-y-auto max-h-[92vh]">
+      <div className="p-2 bg-gray-200 overflow-y-auto max-h-[92vh] rounded-b">
         <table className="w-full">
           <thead className="bg-amber-500">
             <tr>
@@ -192,7 +242,8 @@ export default function UpdateCircuit() {
               <th>Images</th>
               <th>Thumbnail</th>
               <th>Weather data</th>
-              <th></th>
+              <th>Edit</th>
+              <th>Delete</th>
             </tr>
           </thead>
           <tbody className="bg-gray-200 text-center">
@@ -255,14 +306,40 @@ export default function UpdateCircuit() {
                     Edit
                   </button>
                 </td>
+                <td className="flex py-2 justify-center items-center text-red-500">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="icon icon-tabler icons-tabler-outline icon-tabler-circle-minus hover:scale-120 duration-300 drop-shadow-xs drop-shadow-red-600 cursor-pointer"
+                    onClick={() => handelDeleteConfirm(circuit)}
+                  >
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+                    <path d="M9 12l6 0" />
+                  </svg>
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
 
         {selectedCircuit && viewType && (
-          <div className="fixed inset-0 bg-black/40 flex items-center justify-center">
-            <div className="bg-white p-6 rounded-xl max-w-lg w-full relative">
+          <div className="fixed inset-0 bg-black/20 flex items-center justify-center">
+            <div className="relative bg-white p-6 rounded-xl max-w-lg w-full">
+              {loading && (
+                <div
+                  className={`absolute top-0 left-0 h-full rounded-xl w-full bg-black/60 z-40 flex justify-center items-center`}
+                >
+                  <span className={`${styles.loader}`}></span>
+                </div>
+              )}
               <button
                 onClick={() => {
                   setSelectedCircuit(null);
@@ -273,9 +350,9 @@ export default function UpdateCircuit() {
                 ✕
               </button>
 
-              {/* ========== FORM EDIT ========== */}
+              {/*  FORM EDIT */}
               {viewType === "edit" && formData && (
-                <div>
+                <div className="relative">
                   <h2 className="text-lg font-bold mb-2">
                     Edit Circuit ({formData.name})
                   </h2>
@@ -320,7 +397,7 @@ export default function UpdateCircuit() {
                       placeholder="Google Map Url"
                     />
 
-                    {/* ========== IMAGES UPLOAD & LIST ========== */}
+                    {/* IMAGES UPLOAD & LIST */}
                     <div>
                       <p className="font-semibold">Images</p>
                       <div className="flex flex-wrap gap-2">
@@ -387,7 +464,7 @@ export default function UpdateCircuit() {
                       )}
                     </div>
 
-                    {/* ========== THUMBNAIL UPLOAD ========== */}
+                    {/* THUMBNAIL UPLOAD */}
                     <div>
                       <p className="font-semibold">Thumbnail</p>
                       {formData.thumbnail && !removeThumbnail ? (
@@ -411,9 +488,10 @@ export default function UpdateCircuit() {
                       ) : (
                         <p className="text-gray-500">No thumbnail</p>
                       )}
-                      <div className="mt-2">
+                      <div className="mt-2 flex flex-col justify-center items-center w-full">
+                        <label className="text-xl">Choose Thumbnail file</label>
                         <input
-                          placeholder="Choose file"
+                          placeholder="+"
                           type="file"
                           accept="image/*"
                           onChange={(e) => {
@@ -421,6 +499,7 @@ export default function UpdateCircuit() {
                               setNewThumbnail(e.target.files[0]);
                             }
                           }}
+                          className="border border-amber-500 p-2 rounded w-full"
                         />
                         {newThumbnail && (
                           <img
@@ -434,14 +513,14 @@ export default function UpdateCircuit() {
                   </div>
                   <button
                     onClick={handleSave}
-                    className="mt-4 px-4 py-2 bg-green-600 text-white rounded font-bold"
+                    className="mt-4 px-4 py-2 bg-green-600 text-white font-bold cursor-pointer hover:rounded-2xl duration-300"
                   >
                     Save
                   </button>
                 </div>
               )}
 
-              {/* ========== IMAGE VIEW ========== */}
+              {/* IMAGE VIEW */}
               {viewType === "images" && (
                 <div>
                   <h2 className="text-lg font-bold mb-2">Images</h2>
@@ -462,7 +541,7 @@ export default function UpdateCircuit() {
                 </div>
               )}
 
-              {/* ========== THUMBNAIL VIEW ========== */}
+              {/* THUMBNAIL VIEW */}
               {viewType === "thumbnail" && (
                 <div>
                   <h2 className="text-lg font-bold mb-2">Thumbnail</h2>
@@ -478,7 +557,7 @@ export default function UpdateCircuit() {
                 </div>
               )}
 
-              {/* ========== WEATHER VIEW ========== */}
+              {/* WEATHER VIEW */}
               {viewType === "weather" && (
                 <div>
                   <h2 className="text-lg font-bold mb-2">Weather Data</h2>

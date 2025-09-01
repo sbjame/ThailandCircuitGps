@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { axiosInstance } from "@/lib/axiosInstance";
+import styles from "@/styles/map.module.css"
 
 type CreateCircuitMenuProps = {
   role: string;
@@ -19,8 +20,11 @@ export default function CreateCircuitMenu({ role }: CreateCircuitMenuProps) {
   const [type, setType] = useState("Automotive");
   const [images, setImages] = useState<File[]>([]);
   const [thumbnail, setThumbnail] = useState<File | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const handleCreateCircuit = async () => {
+    setLoading(true)
+
     if (!circuitName.trim()) {
       alert("Please enter the name of the racetrack.");
       return;
@@ -99,6 +103,7 @@ export default function CreateCircuitMenu({ role }: CreateCircuitMenuProps) {
       setLocationUrl("");
       setImages([]);
       setThumbnail(null);
+      setLoading(false)
     } catch (err) {
       console.error("❌ Error creating circuit:", err);
     }
@@ -118,7 +123,14 @@ export default function CreateCircuitMenu({ role }: CreateCircuitMenuProps) {
   };
 
   return (
-    <div className={`flex flex-col items-center px-8 gap-4`}>
+    <div className={`relative flex flex-col items-center px-8 gap-4`}>
+      {loading && (
+        <div
+          className={`absolute top-0 left-1/2 -translate-x-1/2 h-full w-[96vw] bg-black/40 z-40 flex justify-center items-center`}
+        >
+          <span className={`${styles.loader}`}></span>
+        </div>
+      )}
       <div className="w-full">
         <div className="flex justify-between text-2xl bg-gray-300 p-2 rounded-t">
           <h1>Create Circuit</h1>
