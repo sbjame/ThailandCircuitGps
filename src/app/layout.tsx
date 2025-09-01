@@ -16,6 +16,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Thailand Circuit Maps",
   description: "All Circuits Location in Thailand with Track Forecast",
+  icons:{
+    icon: "/icons/LN.png"
+  }
 };
 
 export default function RootLayout({
