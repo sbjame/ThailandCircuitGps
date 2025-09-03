@@ -2,7 +2,7 @@
 
 # Thailand Circuit Map
 
-[Demo](https://thailandcircuitgpsapi.onrender.com)
+[Demo](https://thailand-circuit-gps.vercel.app)
 
 ## Table of Contents
 - [About](#about)
