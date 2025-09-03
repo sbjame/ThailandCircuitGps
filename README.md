@@ -3,6 +3,7 @@
 # Thailand Circuit Map
 
 [Demo](https://thailand-circuit-gps.vercel.app)
+![Screenshot](./public/images/demo-screenshot.png)
 
 ## Table of Contents
 - [About](#about)
