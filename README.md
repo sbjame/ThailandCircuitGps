@@ -55,9 +55,7 @@ cd thailandcircuitmap
 BASE_URL=your_api_url_from_other_project
 ```
 BASE_API setup
-The value of BASE_URL comes from another project.
-
-👉 [API](https://github.com/sbjame/ThailandCircuitGpsApi/tree/main)
+The value of BASE_URL comes from another project. 👉 [API](https://github.com/sbjame/ThailandCircuitGpsApi/tree/main)
 
 Clone and run the other project.
 
