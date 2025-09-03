@@ -27,7 +27,7 @@ It allows users to explore race tracks, view details, and check additional infor
 - Responsive UI for both Desktop and Mobile  
 
 
-## 🛠Tech Stack
+## Tech Stack
 - [Next.js](https://nextjs.org/) – React framework  
 - [React](https://react.dev/) – Frontend library  
 - [Tailwind CSS](https://tailwindcss.com/) – CSS framework  
