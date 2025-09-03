@@ -73,7 +73,7 @@ npm run dev
 Then open http://localhost:3000 in your browser.
 ```
 
-## Project Struture
+## Project Structure
 ```text
  ├── public/              # Static assets (images, icons)
  ├── src/                 # Main application source
