@@ -2,8 +2,7 @@ import TrackMapClient from "./TrackMapClient";
 import { fetchTracks } from "@/lib/apiClient";
 import styles from "@/styles/map.module.css";
 
-export const revalidate = 0;
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 export default async function TracksMapPage() {
   const tracks = await fetchTracks();
